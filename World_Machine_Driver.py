@@ -50,19 +50,21 @@ def availableLogs():
         print(f"Log {logs[i]}")
 
 def printOldMachineText(text):
+    '''Prints the text for the old machine, slowed for dramatic effect'''
     for char in text:
         print(char, end="", flush=True)
         time.sleep(0.1)
     print("")
 
 def oldPasswordDemand():
-    '''This function handles the password inputs and reacts accordingly'''
+    '''This function handles the password inputs and reacts accordingly. 
+    Same code as previous version but updated for the old machine'''
     userInput = (input(">Password: "))
     oldPasswordAttempts = 3
     while userInput != "secret":
         oldPasswordAttempts = oldPasswordAttempts-1
         if oldPasswordAttempts == 0:
-            print(">System Locked")
+            printOldMachineText(">System Locked")
             return False
         print("Error: Wrong Password ", oldPasswordAttempts, " Remaining")
         userInput = (input(">Password: "))
@@ -70,6 +72,7 @@ def oldPasswordDemand():
     return True
 
 def oldMachine():
+    '''Similar to main function, runs all the code relating to the old machine'''
     result = oldPasswordDemand()
     if not (result):
         return
@@ -80,6 +83,7 @@ def oldMachine():
     
 
 def main(): #You don't need a main function but I'm so used to c++ that I decided to do it this way
+    '''Function to run the main part of the code and implement the functions'''
     if not passwordDemand():
         return
     readLogCollection()
