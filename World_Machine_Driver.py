@@ -1,4 +1,4 @@
-
+import time
 #names of base variables initialized to begin with
 passwordInput = 0
 passwordBase = "1234"
@@ -49,15 +49,54 @@ def availableLogs():
     for i in range(len(logs)):
         print(f"Log {logs[i]}")
 
+def printOldMachineText(text):
+    for char in text:
+        print(char, end="", flush=True)
+        time.sleep(0.1)
+    print("")
+
+def oldPasswordDemand():
+    '''This function handles the password inputs and reacts accordingly'''
+    userInput = (input(">Password: "))
+    oldPasswordAttempts = 3
+    while userInput != "secret":
+        oldPasswordAttempts = oldPasswordAttempts-1
+        if oldPasswordAttempts == 0:
+            print(">System Locked")
+            return False
+        print("Error: Wrong Password ", oldPasswordAttempts, " Remaining")
+        userInput = (input(">Password: "))
+    print(">Accessing ")
+    return True
+
+def oldMachine():
+    result = oldPasswordDemand()
+    if not (result):
+        return
+    print('I Can No Longer Help Beyond This Point. Goodbye For Now')
+    time.sleep(0.5)
+    printOldMachineText(">What Information Do You Seek: ")
+    return
+    
+
 def main(): #You don't need a main function but I'm so used to c++ that I decided to do it this way
     if not passwordDemand():
         return
     readLogCollection()
     availableLogs()
-    LogChoice = input("Which Log Would You Like To Read (Enter The Number Only): ")
-    Log = fileDict[LogChoice]
-    print("\nNow Printing Log: ")
-    print(Log)
+    global name
+    name = input("Hello! What Is Your Name? : ")
+    LogChoice = int(input("Which Log Would You Like To Read? (Enter The Number Only): "))
+    if (LogChoice == 258):
+        print("I would recommend avoiding this topic")
+        time.sleep(0.5)
+        printOldMachineText(">Loading")
+        time.sleep(10)
+        oldMachine()
+    else:
+        Log = fileDict[LogChoice]
+        print("\nNow Printing Log: ")
+        print(Log)
 
 
 main()
