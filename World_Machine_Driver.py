@@ -90,12 +90,12 @@ def main(): #You don't need a main function but I'm so used to c++ that I decide
     availableLogs()
     global name
     name = input("Hello! What Is Your Name? : ")
-    LogChoice = int(input("Which Log Would You Like To Read? (Enter The Number Only): "))
-    if (LogChoice == 258):
+    LogChoice = (input("Which Log Would You Like To Read? (Enter The Number Only): "))
+    if (LogChoice == "258"):
         print("I would recommend avoiding this topic")
         time.sleep(0.5)
         printOldMachineText(">Loading")
-        time.sleep(10)
+        time.sleep(5)
         oldMachine()
     else:
         Log = fileDict[LogChoice]
