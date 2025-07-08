@@ -79,28 +79,57 @@ def oldMachine():
     print('I Can No Longer Help Beyond This Point. Goodbye For Now')
     time.sleep(0.5)
     printOldMachineText(">What Information Do You Seek: ")
+    LogChoice = input()
+    #while LogChoice != -1:
+        #This will need to wait until the old world machine logs are made
     return
     
 
 def main(): #You don't need a main function but I'm so used to c++ that I decided to do it this way
     '''Function to run the main part of the code and implement the functions'''
+    past_name = False
     if not passwordDemand():
         return
     readLogCollection()
-    availableLogs()
-    global name
+    global name 
     name = input("Hello! What Is Your Name? : ")
-    LogChoice = (input("Which Log Would You Like To Read? (Enter The Number Only): "))
-    if (LogChoice == "258"):
-        print("I would recommend avoiding this topic")
-        time.sleep(0.5)
-        printOldMachineText(">Loading")
-        time.sleep(5)
-        oldMachine()
+    file = open("PastNames.txt", "r")
+    file_name = file.readline()
+    while (file_name != ""):
+        if file_name == name:
+            past_name = True
+        file_name = file.readline()
+    if (past_name):
+        print("Welcome Back" + name + " Here Are The Logs Available To You")
     else:
-        Log = fileDict[LogChoice]
-        print("\nNow Printing Log: ")
-        print(Log)
+        print("Hello " + name + ", Here Are The Logs Available To You")
+    availableLogs()
+    LogChoice = (input("Which Log Would You Like To Read? (Enter The Number Only): "))
+    while LogChoice != -1:
+        if (LogChoice == "258"):
+            print("I would recommend avoiding this topic")
+            time.sleep(0.5)
+            printOldMachineText(">Loading")
+            time.sleep(5)
+            oldMachine()
+            return
+        elif (LogChoice == "-1"):
+            break
+        elif (not fileDict.__contains__(LogChoice)):
+            print("Invalid Log Selection")
+        else:
+            Log = fileDict[LogChoice]
+            print("\nNow Printing Log: ")
+            print(Log)
+        LogChoice = input("Would You Like To Read Another Log? (-1 to exit): ")
+    print("Goodbye " + name + ", I Hope You Learned All You Wanted, I Wish To See You Soon :)")
+    file.close()
+    if (not past_name):
+        file = open("PastNames.txt", "a")
+        file.write(name + "\n")
+        file.close()
+    return
+
 
 
 main()
