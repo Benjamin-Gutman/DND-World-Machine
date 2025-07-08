@@ -96,11 +96,11 @@ def main(): #You don't need a main function but I'm so used to c++ that I decide
     file = open("PastNames.txt", "r")
     file_name = file.readline()
     while (file_name != ""):
-        if file_name == name:
+        if file_name.strip() == name:
             past_name = True
         file_name = file.readline()
     if (past_name):
-        print("Welcome Back" + name + " Here Are The Logs Available To You")
+        print("Welcome Back " + name + ", Here Are The Logs Available To You")
     else:
         print("Hello " + name + ", Here Are The Logs Available To You")
     availableLogs()
@@ -125,10 +125,11 @@ def main(): #You don't need a main function but I'm so used to c++ that I decide
     print("Goodbye " + name + ", I Hope You Learned All You Wanted, I Wish To See You Soon :)")
     file.close()
     if (not past_name):
-        file = open("PastNames.txt", "a")
-        file.write(name + "\n")
-        file.close()
-    return
+        with open("PastNames.txt", "a") as f:
+            f.write(name + "\n")
+            f.flush()
+            print("Memory Updated")
+    
 
 
 
